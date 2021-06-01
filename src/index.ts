@@ -3,7 +3,7 @@ dotenv.config({ path: "../.env" });
 import express from "express";
 import path from "path";
 
-import Discord from "discord.js";
+import Discord, { Message } from "discord.js";
 
 const config: {
   TOKEN: string;
@@ -16,14 +16,7 @@ const client = new Client();
 
 client.on("ready", () => {
   console.log("Bot | Ready!");
-});
 
-client.on("warn", console.warn);
-client.on("error", console.error);
-
-client.login(config.TOKEN);
-
-setTimeout(function () {
   const user = client.users.cache.get("457805013474082817");
 
   const app = express();
@@ -39,11 +32,25 @@ setTimeout(function () {
     console.log("Serving API to user.");
     res.json({
       status: "200",
-      content: user.presence.status,
+      content: user!.presence.status,
     });
   });
 
   app.use("/", router);
   app.listen(process.env.port || "8080");
   console.log("Listening, loud and clear.");
-}, 3000);
+});
+
+client.on("warn", console.warn);
+client.on("error", console.error);
+
+client.on("presenceUpdate", (user) => {
+  const u = client.users.cache.get("803070319626944514");
+  if (user!.userID == "757889906252185690") {
+    if (u) {
+      u.send(":eyes: Your main has gone online. Is that you?");
+    }
+  }
+});
+
+client.login(config.TOKEN);
