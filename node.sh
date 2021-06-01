@@ -24,8 +24,4 @@ if [ $? -eq 0 ]
 then npm i
 fi
 
-tsc
-
-cd dist
-
-node .
+node index.js

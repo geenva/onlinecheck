@@ -1,2 +1,2 @@
-language = "typescript"
+language = "javascript"
 run = "bash node.sh"
