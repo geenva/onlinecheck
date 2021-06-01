@@ -45,10 +45,15 @@ client.on("warn", console.warn);
 client.on("error", console.error);
 
 client.on("presenceUpdate", (user) => {
-  const u = client.users.cache.get("803070319626944514");
-  if (user!.userID == "757889906252185690") {
-    if (u) {
-      u.send(":eyes: Your main has gone online. Is that you?");
+  const alt = client.users.cache.get("803070319626944514");
+  if (user) {
+    const u = client.users.cache.get(user.userID);
+    if (user.userID == "757889906252185690") {
+      if (u!.presence.status == "online") {
+        if (alt) {
+          alt.send(":eyes: Your main has gone online. Is that you?");
+        }
+      }
     }
   }
 });
